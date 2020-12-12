@@ -1,0 +1,67 @@
+
+
+{% extends 'heroes_stats/layout.html' %}
+{% block content %}
+    <div id="main_container">
+    <div id="heroes_grid">
+        <p class='title_main'>All Heroes</p>
+        <div class='wrapper-grid'>
+            {% for hero_url in data['alpha_sort'] %}
+                <div class="hero_card">
+                    <div class="hero_img_div">
+                    <a href="{{ url_for('heroes_stats.coucou', id_hero=hero_url.hero_id) }}">
+                    <img class="{{ ['hero_img', hero_url.primary_attr]|join('_') }}" src="{{ url_for('static', filename=hero_url.url_img) }}" alt="" >
+                    </a>
+                    </div>
+                    <p class="hero_name">{{ hero_url.name_hero_readable }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="heroes_rank">
+        <p class='title_main'>Heroes ranking</p>
+        <div class='rank_button_container'>
+            <button id="custom_rank" type='button' class='rank_button' onclick="setColorRank(this.id)" >Win rate<sup>2</sup> x Pick rate</button>
+            <button id="win_rate_rank" type='button' class='rank_button' onclick="setColorRank(this.id)">Win rate</button>
+            <button id="pick_rate_rank" type='button' class='rank_button' onclick="setColorRank(this.id)">Pick rate</button>
+        </div>
+        <div class="attr_button_container">
+            <button id="str_button" type='button' class='attr_button' onclick="setOpacityButton(this.id)">STR</button>
+            <button id="agi_button" type='button'  class='attr_button' onclick="setOpacityButton(this.id)">AGI</button>
+            <button id="int_button" type='button'  class='attr_button' onclick="setOpacityButton(this.id)">INT</button>
+        </div>
+        <table class='table_content' id="table_rank">
+            <thead>
+                <tr>
+                <th class='heroes_table_header'>Rank</th>
+                <th class='heroes_table_header'></th>
+                <th class='heroes_table_header'>Heroes</th>
+                <th class='heroes_table_header'>Roles</th>
+                <th class='heroes_table_header'>Win rate</th>
+                <th class='heroes_table_header'>Pick rate</th>
+                </tr>
+            </thead>
+            <tbody class="heroes_table_body" id='table_ranking_body'>
+                {% for hero_url in data['indicator_sort'] %}
+                    <tr class='heroes_table_row'>
+                    <th class='heroes_table_rank'>{{ loop.index }}</th>
+                    <th class='heroes_table_img'>
+                        <a href="{{ url_for('heroes_stats.coucou', id_hero=hero_url.hero_id) }}">
+                        <img class="{{ ['hero_img', hero_url.primary_attr]|join('_') }}" src="{{ url_for('static', filename=hero_url.url_img) }}" alt="" >
+                        </a>
+                    </th>
+                    <th class='heroes_table_spec'>
+                        <p class="hero_name_table">{{ hero_url.name_hero_readable }}</p>
+                        <p class="hero_name_attribute_attack">{{ hero_url.primary_attr }}, {{ hero_url.attack_type }}</p>
+                    </th>
+                    <th class="hero_name_roles">{{ hero_url.roles }}</th>
+                    <th class='heroes_table_win_rate'>{{ hero_url.win_rate }}</th>
+                    <th class='heroes_table_pick_rate'>{{ hero_url.pick_rate }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+{% endblock %}
+

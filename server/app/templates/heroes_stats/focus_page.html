@@ -1,0 +1,80 @@
+{% extends 'heroes_stats/layout.html' %}
+{% block content %}
+<div id="column_container" >
+   <div id="heroes_container">
+      <img class="main_hero_img" src="{{ url_for('static', filename=data.hero_info.url_img) }}" alt="">
+      <div class='main_hero_spec'>
+         <p id='main_hero_name'><b>{{ data.hero_info.name_hero_readable }}</b></p>
+         <p>{{ data.hero_info.primary_attr }}, {{ data.hero_info.attack_type }}</p>
+         <p>{{ data.hero_info.roles }}
+         <p>
+      </div>
+   </div>
+   <div id="tables_container">
+      {% set indicators = [
+        {
+            "primary": {
+                "key": "win_rate",
+                "name": "Win rate",
+                "title": "Best Win rate"
+            },
+            "secondary": {
+                "key": "n_matchs",
+                "name": "Matchs played",
+                "title": "Most Matchs played"
+            }
+        },
+        {
+            "secondary": {
+                "key": "win_rate",
+                "name": "Win rate",
+                "title": "Best Win rate"
+            },
+            "primary": {
+                "key": "n_matchs",
+                "name": "Matchs played",
+                "title": "Most Matchs played"
+            }
+        }
+      ] %}
+      {% for relation in ['against', 'with'] %}
+        {% for indicator in indicators %}
+            <div id="{{ [indicator.primary.key, relation, 'table']|join('_') }}">
+                <p class='title_main'>{{ indicator.primary.title }} <b class="{{ relation }}">{{ relation }}</b> <b>{{ data.hero_info.name_hero_readable }}</b></p>
+                <table class='table_content'>
+                    <thead>
+                    <tr>
+                        <th class='heroes_table_header'>Rank</th>
+                        <th class='heroes_table_header'></th>
+                        <th class='heroes_table_header'>Heroes</th>
+                        <th class='heroes_table_header'>Roles</th>
+                        <th class='heroes_table_header_primary_indicator'>{{ indicator.primary.name }}</th>
+                        <th class='heroes_table_header_secondary_indicator'>{{ indicator.secondary.name }}</th>
+                    </tr>
+                    </thead>
+                    <tbody class="heroes_table_body">
+                    {% for hero_url in data[[indicator.primary.key, relation]|join('_')] %}
+                        <tr class='heroes_table_row'>
+                            <th class='heroes_table_rank'>{{ loop.index }}</th>
+                            <th class='heroes_table_img'>
+                                <a href="{{ url_for('heroes_stats.coucou', id_hero=hero_url.hero_id) }}">
+                                <img class="{{ ['hero_img', hero_url.primary_attr]|join('_') }}" src="{{ url_for('static', filename=hero_url.url_img) }}" alt="" >
+                                </a>
+                            </th>
+                            <th class='heroes_table_spec'>
+                                <p class="hero_name_table">{{ hero_url.name_hero_readable }}</p>
+                                <p class="hero_name_attribute_attack">{{ hero_url.primary_attr }}, {{ hero_url.attack_type }}</p>
+                            </th>
+                            <th class="hero_name_roles">{{ hero_url.roles }}</th>
+                            <th class='heroes_table_primary_indicator'>{{ hero_url[indicator.primary.key] }}</th>
+                            <th class='heroes_table_secondary_indicator'>{{ hero_url[indicator.secondary.key] }}</th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+      {% endfor %}
+   </div>
+</div>
+{% endblock %}

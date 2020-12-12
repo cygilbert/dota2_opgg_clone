@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" >
+   <head>
+      <meta charset="UTF-8">
+      <title>Dota2 op.gg clone</title>
+   </head>
+   <body>
+      <head>
+         <link href="https://fonts.googleapis.com/css?family=Inter:400,800,900&display=swap" rel="stylesheet">
+         <script  src="{{ url_for('static', filename='heroes_stats/assets/js/main.js') }}"></script>
+         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='heroes_stats/assets/css/style_grid.css') }}">
+      </head>
+      <div class="container">
+      {% extends 'heroes_stats/navbar.html' %}
+      {% block maincontainer %}
+        <div id="blank_banner"></div>
+        <div id="blank_left"></div>
+        <div id="blank_right"></div>
+        <main id="main">
+          {% block content %}{% endblock %}
+        </main>
+      {% endblock %}
+   </body>
+</html>
+
