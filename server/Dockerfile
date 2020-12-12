@@ -19,5 +19,6 @@ RUN pip install -r requirements.txt
 
 # Run app.py when the container launches
 COPY app app
-COPY config.py wsgi.py ./
-CMD python wsgi.py
+COPY config.py wsgi.py boot.sh ./
+RUN chmod +x boot.sh
+ENTRYPOINT ["./boot.sh"]
