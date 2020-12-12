@@ -1,8 +1,8 @@
 """Routes for heroes stats web app"""
-from flask import render_template
 from app.heroes_stats import bp
-from app.heroes_stats.utils import preprocess_rows, query_to_rows,\
-    get_data_hero_against_with
+from app.heroes_stats.utils import get_data_hero_against_with,\
+    preprocess_rows, query_to_rows
+from flask import render_template
 
 
 @bp.route('/', methods=['GET', 'POST'])

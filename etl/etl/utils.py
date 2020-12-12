@@ -1,8 +1,7 @@
-import requests
-import pandas as pd
-from requests.exceptions import HTTPError
 from datetime import datetime, timedelta
-from multiprocessing import Pool
+from requests.exceptions import HTTPError
+import pandas as pd
+import requests
 
 
 # per default user agent
@@ -50,6 +49,10 @@ def get_interval_date_unix(date):
 def get_sql_explorer_req_from_date(
         date,
         base_explorer_api="https://api.opendota.com/api/explorer?sql="):
+    """
+    Build SQL request to request steam api
+    """
+    # convert to unix
     start_unix_time, end_unix_time = get_interval_date_unix(date=date)
     sql_request = f'\
 SELECT match_id, avg_mmr, cluster, radiant_win, start_time \
@@ -76,12 +79,24 @@ def read_parse_sql_file(path_sql_script):
     return dml
 
 
-def insert_data_to_tables(data, cursor, table_name, columns, bool_columns=None):
+def insert_data_to_tables(
+    data,
+    cursor,
+    table_name,
+    columns,
+    bool_columns=None
+):
+    """
+    TO DO
+    """
     df = pd.DataFrame(data)[columns]
     if bool_columns:
         for col in bool_columns:
             df[col] = df[col].map(int)
     tuples_data = [tuple(x) for x in df.applymap(str).to_numpy()]
     cursor.executemany(
-        f"INSERT INTO {table_name} ({' ,'.join(columns)}) VALUES ({' ,'.join(['%s']*len(columns))})", tuples_data)
+        f'''INSERT INTO {table_name} ({' ,'.join(columns)})
+        VALUES ({' ,'.join(['%s']*len(columns))})''',
+        tuples_data
+    )
     return cursor
