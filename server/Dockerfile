@@ -11,6 +11,6 @@ RUN pip install -r requirements.txt
 
 
 COPY app app
-COPY config.py wsgi.py boot.sh ./
+COPY config.py wsgi.py wait_for_mysql_db_backend.py boot.sh ./
 RUN chmod +x boot.sh
 ENTRYPOINT ["./boot.sh"]
