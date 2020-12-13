@@ -23,8 +23,7 @@ services:
     depends_on:
       - redis
       - db
-    environment: &ref_0
-      - API_KEY_STEAM=your-api-key
+    env_file: .env
     command:
       - python
       - wait_for_mysql_db_backend.py
@@ -40,7 +39,7 @@ services:
       - python
       - wait_for_mysql_db_backend.py
       - celery -A celery_app.celery beat --loglevel=INFO --pidfile=
-    environment: *ref_0
+    env_file: .env
     depends_on:
       - redis
       - db
