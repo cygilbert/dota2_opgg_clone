@@ -29,7 +29,8 @@ CREATE TABLE heroes
      localized_name VARCHAR(20) NOT NULL,
      attack_type    VARCHAR(10),
      primary_attr   VARCHAR(10),
-     PRIMARY KEY (hero_id)
+     PRIMARY KEY (hero_id),
+     INDEX ind_hero_id (hero_id)
   );
 
 DROP TABLE IF EXISTS heroes_roles;
@@ -49,6 +50,5 @@ CREATE TABLE matchs_heroes
      hero_id  BIGINT NOT NULL,
      is_win   BOOLEAN,
      FOREIGN KEY (match_id) REFERENCES matchs(match_id),
-     FOREIGN KEY (hero_id) REFERENCES heroes(hero_id),
-     INDEX ind_hero_id (hero_id)
+     FOREIGN KEY (hero_id) REFERENCES heroes(hero_id)
   );
