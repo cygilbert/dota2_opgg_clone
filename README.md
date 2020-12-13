@@ -13,7 +13,7 @@ This website provides insights to gamers for League of Legends, PlayerUnknown's 
 ### Why ?
 [OP.GG](https://www.op.gg/champion/statistics) does not provide stats on Dota 2, so as a player I decided to start building it
 
-![](assets/homepage.png)           |  ![](assets/focus.png)
+![](assets/homepage.png)   |  ![](assets/focus.png)
 :-------------------------:|:-------------------------:
  Homepage |  Hero focus
 ## Technical stack
@@ -72,7 +72,9 @@ cd dota2_opgg_clone
 ```
 docker-compose --version
 ```
-If not: [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
+If not: [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)  
+
+
 3. (Optionnal) Get Steam API Key [here](https://steamcommunity.com/login/home/?goto=%2Fdev%2Fapikey)
 You need a steam account. If you dont want to get one key, the project will still run but the ETL jobs won't request anything from API and you will just visualize [init data](db/init_data) 
 Once you get a key put it in a environment file
