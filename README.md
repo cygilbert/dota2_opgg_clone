@@ -13,39 +13,13 @@ This website provides insights to gamers for League of Legends, PlayerUnknown's 
 ### Why ?
 [OP.GG](https://www.op.gg/champion/statistics) does not provide stats on Dota 2, so as a player I decided to start building it
 
-<div class="row">
-  <div class="column">
-    <img src="assets/homepage.png" alt="" style="width:100%">
-  </div>
-  <div class="column">
-    <img src="assets/focus.png" alt="" style="width:100%">
-  </div>
-</div>
-<style>
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 5px;
-}
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-</style>
-
+![](assets/homepage.png)           |  ![](assets/focus.png)
+:-------------------------:|:-------------------------:
+ Homepage |  Hero focus
 ## Technical stack
 
 ### Schema
-![](assets/dota2_opgg_clone_stack.png){:height="50%" width="50%"}
-<!-- <img src="assets/dota2_opgg_clone_stack.png" height="500" class="center">
-<style>
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style> -->
+![](assets/dota2_opgg_clone_stack.png)
 
 ### Tree structure
 ```bash
