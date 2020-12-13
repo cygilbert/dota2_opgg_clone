@@ -19,7 +19,7 @@ services:
 
   worker:
     build: ./etl
-    image: worker
+    image: &img worker
     depends_on:
       - redis
       - db
@@ -34,7 +34,7 @@ services:
 
   beat:
     build: ./etl
-    image: worker
+    image: *img
     command:
       - python
       - wait_for_mysql_db_backend.py
@@ -44,6 +44,25 @@ services:
       - redis
       - db
       - worker
+    restart: 'no'
+    volumes:
+      - './etl:/etl'
+    
+  flower:
+    build: ./etl
+    image: *img
+    command:
+      - python
+      - wait_for_mysql_db_backend.py
+      - celery -A celery_app.celery flower --port=5555
+    env_file: .env
+    depends_on:
+      - redis
+      - db
+      - worker
+      - beat
+    ports:
+      - '5555:5555'
     restart: 'no'
     volumes:
       - './etl:/etl'
