@@ -79,6 +79,24 @@ def read_parse_sql_file(path_sql_script):
     return dml
 
 
+def test_steam_api_key(api_key=None):
+    """
+    Test if api_key is valid for steam api
+
+    Parameters
+    ----------
+        api_key (int): api steam key
+    Returns
+    -------
+        (bool): True if valid
+    """
+    # According to https://developer.valvesoftware.com/wiki
+    # /Steam_Web_API#GetGlobalAchievementPercentagesForApp_.28v0001.29
+    url_test = f'http://api.steampowered.com/ISteamUser\
+/GetPlayerSummaries/v0002/?key={api_key}&steamids=76561197960435530'
+    return requests.get(url_test).status_code == 200
+
+
 def insert_data_to_tables(
     data,
     cursor,

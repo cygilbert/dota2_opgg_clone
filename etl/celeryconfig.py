@@ -8,17 +8,20 @@ basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
 
 # Broker and Backend
-REDIS_HOST = '127.0.0.1'
-REDIS_PORT = 6379
 BROKER_URL = environ.get(
     'REDIS_URL',
-    'redis://{host}:{port}/0'.format(
-        host=REDIS_HOST,
-        port=str(REDIS_PORT)
-    )
+    'redis://redis:6379/0'
 )
-
 CELERY_RESULT_BACKEND = BROKER_URL
+
+# MySQL paramas
+mysql_params = {
+    'host': environ.get('MYSQL_HOST', 'db'),
+    'port': int(environ.get('MYSQL_PORT', 3306)),
+    'user': environ.get('MYSQL_USER', 'root'),
+    'password': environ.get('MYSQL_PASSWORD', 'root'),
+    'database': environ.get('MYSQL_DB', 'dota2_datawarehouse')
+}
 
 # Import, timezone schreduler
 CELERY_IMPORTS = ['etl.etl_workflow', 'etl.etl_tasks']
@@ -29,7 +32,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERYBEAT_SCHEDULE = {'test-celery': {
     'task': 'etl.etl_workflow.workflow',
-    'schedule': 40, 'args': (10, environ.get('API_KEY_STEAM'))
+    'schedule': 40, 'args': (10, environ.get('API_KEY_STEAM'), mysql_params)
     }
 }
 

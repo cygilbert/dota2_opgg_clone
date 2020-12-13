@@ -12,7 +12,6 @@ services:
 
   server:
     build: ./server
-    env_file: .env
     links:
       - db
     ports:
@@ -25,8 +24,7 @@ services:
       - redis
       - db
     environment: &ref_0
-      - 'REDIS_URL=redis://redis:6379/0'
-    env_file: .env
+      - API_KEY_STEAM=5D239961022A891049101AFB36EB8DD1
     command:
       - python
       - wait_for_mysql_db_backend.py
@@ -43,8 +41,6 @@ services:
       - wait_for_mysql_db_backend.py
       - celery -A celery_app.celery beat --loglevel=INFO --pidfile=
     environment: *ref_0
-    env_file:
-      - .env
     depends_on:
       - redis
       - db

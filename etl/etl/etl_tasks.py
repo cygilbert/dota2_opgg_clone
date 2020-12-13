@@ -3,7 +3,6 @@ from celery_app import celery
 from etl.etl_functions import extract_teams, get_match_detail_from_match_id
 from etl.utils import flat_list, insert_data_to_tables,\
     get_sql_explorer_req_from_date, read_parse_sql_file, request_from_url
-from os import environ
 import mysql.connector
 import random
 
@@ -69,7 +68,7 @@ def complete_match_metadata_with_teams(
 
 
 @celery.task()
-def update_db(matchs_completed):
+def update_db(matchs_completed, mysql_params):
     """
     Preprocess a list of matchs to push data
     to matchs_heroes and matchs table
@@ -79,6 +78,8 @@ def update_db(matchs_completed):
     Parameters
     ----------
         matchs_completed (list of dict): list of matchs metadata completed
+        mysql_params (dict): mysql connection info including
+            host, port, user, password and database name
     Returns
     -------
         (bool): True
@@ -99,13 +100,7 @@ def update_db(matchs_completed):
         ]
     )
     print("pushing data")
-    db = mysql.connector.connect(
-        host='db',
-        port=environ.get('MYSQL_PORT'),
-        user=environ.get('MYSQL_USER'),
-        password=environ.get('MYSQL_PASSWORD'),
-        database=environ.get('MYSQL_DB')
-    )
+    db = mysql.connector.connect(**mysql_params)
     cursor = db.cursor()
     cursor = insert_data_to_tables(matchs_completed, cursor, 'matchs', [
                                    'match_id', 'start_time'])
