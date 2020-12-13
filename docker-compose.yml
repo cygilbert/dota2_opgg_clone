@@ -24,7 +24,7 @@ services:
       - redis
       - db
     environment: &ref_0
-      - API_KEY_STEAM=5D239961022A891049101AFB36EB8DD1
+      - API_KEY_STEAM=your-api-key
     command:
       - python
       - wait_for_mysql_db_backend.py
