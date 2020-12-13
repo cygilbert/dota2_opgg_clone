@@ -37,14 +37,15 @@ This website provides insights to gamers for League of Legends, PlayerUnknown's 
 ## Technical stack
 
 ### Schema
-<img src="assets/dota2_opgg_clone_stack.png" height="500" class="center">
+![](assets/dota2_opgg_clone_stack.png){:height="50%" width="50%"}
+<!-- <img src="assets/dota2_opgg_clone_stack.png" height="500" class="center">
 <style>
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-</style>
+</style> -->
 
 ### Tree structure
 ```bash
