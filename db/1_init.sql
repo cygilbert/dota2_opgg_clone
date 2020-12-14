@@ -12,16 +12,15 @@ USE dota2_datawarehouse;
 
 -- BASE TABLE
 DROP TABLE IF EXISTS matchs;
-
 CREATE TABLE matchs
   (
      match_id   BIGINT NOT NULL UNIQUE,
      start_time BIGINT NOT NULL,
-     PRIMARY KEY (match_id)
+     PRIMARY KEY (match_id),
+     INDEX match_id (match_id)
   );
 
 DROP TABLE IF EXISTS heroes;
-
 CREATE TABLE heroes
   (
      hero_id        BIGINT NOT NULL UNIQUE,
@@ -34,7 +33,6 @@ CREATE TABLE heroes
   );
 
 DROP TABLE IF EXISTS heroes_roles;
-
 CREATE TABLE heroes_roles
   (
      hero_id BIGINT NOT NULL,
@@ -43,7 +41,6 @@ CREATE TABLE heroes_roles
   );
 
 DROP TABLE IF EXISTS matchs_heroes;
-
 CREATE TABLE matchs_heroes
   (
      match_id BIGINT NOT NULL,
